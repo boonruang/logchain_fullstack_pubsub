@@ -46,3 +46,6 @@ git pull origin main
 git push origin main
 
 git reset --hard origin/main
+
+npm run build
+serve -s build -l 80

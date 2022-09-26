@@ -79,8 +79,8 @@ export const NETWORK_TIMEOUT_MESSAGE =
 export const UPLOAD_PHOTO_FAIL_MESSAGE =
   'An error has occurred. The photo was unable to upload.'
 
-// export const apiUrl = 'http://61.19.101.249:3001/api/v2'
-export const apiUrl = 'http://localhost:3000/api/v2'
+export const apiUrl = 'http://61.19.101.249:3001/api/v2'
+// export const apiUrl = 'http://localhost:3001/api/v2'
 
 // export const imageUrl = 'http://61.19.101.249:3000'
 export const imageUrl = 'http://localhost:3000'

@@ -51,7 +51,8 @@ router.get('/node', JwtMiddleware.checkToken, async (req, res) => {
 router.get('/info', JwtMiddleware.checkToken, async (req, res) => {
   let all_nodes = await Node.count()
   let active_nodes = 0
-  let blockCount = await Blockchain.count()
+  // let blockCount = await Blockchain.count()
+  let blockCount = globalVariable.blockchain.chain.length
 
   let users = await Blockchain.count({
     distinct: 'true',
@@ -97,7 +98,7 @@ router.get('/info', JwtMiddleware.checkToken, async (req, res) => {
       active: active_nodes,
       users,
     })
-  }, 100)
+  }, 500)
 })
 
 //  @route                  GET  /api/v2/blockchain/info/:id

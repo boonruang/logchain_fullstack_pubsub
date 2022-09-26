@@ -3,9 +3,15 @@ const bcModel = require('../models/blockchain')
 
 class Blockchain {
   constructor() {
-    // this.chain = [Block.genesis()]
 
+    // if (process.env.API_SERVER === 'true') {
+    //   this.chain = this.init()
+    // } else {
+    //   this.chain = [Block.genesis()]
+    // }
+ 
     this.chain = this.init()
+
     // setTimeout(() => {
     //   console.log('this.chain in constructor: ', this.chain)
     // }, 500)
@@ -31,6 +37,8 @@ class Blockchain {
     try {
       const blockChainData = await bcModel.findAll()
 
+      // return blockChainData
+
       if (blockChainData) {
         // console.log('blockChainData in readData: ', blockChainData)
         // return blockChainData
@@ -44,6 +52,8 @@ class Blockchain {
         console.log('Genesis block: ', Block.genesis())
         return Block.genesis()
       }
+
+      
     } catch (error) {
       console.log('getData class error: ', error)
       return error
@@ -70,6 +80,11 @@ class Blockchain {
         block.lasthash !== lastBlock.hash ||
         block.hash !== Block.blockHash(block)
       ) {
+        // console.log(`false chain[${i}] => `,chain[i]);
+        console.log(`At record => ${i+1}`);
+        console.log(`block.lasthash: ${block.lasthash} lastBlock.hash: ${lastBlock.hash}`);
+        console.log(`block.hash: ${block.hash} Block.blockHash: `,Block.blockHash(block)
+        )
         return false
       }
     }
@@ -110,6 +125,7 @@ class Blockchain {
 
     console.log('Replacing blockchain with the new chain')
     this.chain = newChain
+    // if (this.chain && process.env.API_SERVER === 'true' ) this.writeDB(this.chain)
     if (this.chain) this.writeDB(this.chain)
   }
 
@@ -162,7 +178,9 @@ class Blockchain {
       chain.map((item) => {
         // console.log('Item: ', item)
 
-        if (curBlock_lasthash === item.lasthash) {
+        // if (curBlock_lasthash === item.lasthash) {
+        while (curBlock_lasthash === item.lasthash) {
+          console.log('Item: ', item)
           bcModel
             .create(item)
             .then((result) => {
@@ -171,6 +189,7 @@ class Blockchain {
             .catch((error) => {
               console.log('write data to DB failed: ', error)
             })
+            curBlock_lasthash = item.hash;
         }
       })
     } catch (error) {

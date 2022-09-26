@@ -9,12 +9,13 @@ class PubSub {
   constructor({blockchain}) {
     this.blockchain = blockchain;
 
+if (process.env.ENV === 'development') {
     this.publisher = redis.createClient();
     this.subscriber = redis.createClient();
-
-    // this.publisher = redis.createClient({ url: 'redis://192.168.0.150', port: 6379 });
-    // this.subscriber = redis.createClient({ url: 'redis://192.168.0.150', port: 6379 });
-
+} else {
+    this.publisher = redis.createClient({ url: 'redis://default:Angsana01@192.168.7.58', port: 6379 });
+    this.subscriber = redis.createClient({ url: 'redis://default:Angsana01@192.168.7.58', port: 6379 });
+}
 
     this.subscribeToChannels();
 

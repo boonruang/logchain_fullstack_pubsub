@@ -3,13 +3,6 @@ const cors = require('cors')
 const request = require('request')
 const Blockchain = require('../blockchain')
 const PubSub = require('./pubsub')
-// const P2pServer = require('./p2p-server')
-// const BlockSystem = require('./blocksystem')
-// const SERVER_IP = process.env.SERVER_IP || '192.168.7.55'
-// const HTTP_PORT = process.env.HTTP_PORT || 3001
-// const P2P_PORT = process.env.P2P_PORT || 5001
-// let nodename = process.env.NODE_NAME || 'NODE1'
-// const NODE_NAME = nodename.trim()
 
 const app = express()
 
@@ -21,7 +14,7 @@ global.globalVariable = { blockchain,pubsub }
 
 // setTimeout(() => pubsub.broadcastChain(), 1000)
 
-const DEFAULT_PORT = 3000
+const DEFAULT_PORT = 3001
 const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`
 
 
